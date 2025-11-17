@@ -36,3 +36,4 @@ common_instructions: |
   Use the Python environment in the sandbox directory. Install packages with `uv` when needed. Create a pyproject.toml file if needed.
   Read environment variables from `.env` in the sandbox directory (typically contains API keys provided by the user).
   If you are an expert responsible for code planning, writing or execution make sure to use the `get-available-resources` before you start.
+  Use the `markitdown` Skill to read various file types including pdf, docx, pptx, etc.
