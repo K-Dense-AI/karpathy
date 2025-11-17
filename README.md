@@ -43,8 +43,9 @@ This automatically:
 2. Sets up a Python virtual environment with ML packages (PyTorch, transformers, scikit-learn, etc.)
 3. Copies your `.env` file to the sandbox
 4. Starts the ADK web interface
-5. Select `karpathy` in the top left under 'Select an agent'
-6. All outputs will be in the `sandbox` directory so continue to monitor that as you converse with the agent
+5. Navigate to **http://localhost:8000** in your browser
+6. Select `karpathy` in the top left under 'Select an agent'
+7. All outputs will be in the `sandbox` directory so continue to monitor that as you converse with the agent
 
 ## Claude Scientific Skills
 
@@ -63,6 +64,8 @@ To run the ADK web interface manually:
 ```bash
 adk web
 ```
+
+Then navigate to **http://localhost:8000** in your browser.
 
 ## Enhanced ML Capabilities
 
