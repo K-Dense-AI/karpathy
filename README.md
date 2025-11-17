@@ -31,12 +31,6 @@ Make sure you have the required dependencies installed. If using `uv`:
 uv sync
 ```
 
-Or with pip:
-
-```bash
-pip install -e .
-```
-
 ## Quick Start
 
 To setup the sandbox and start the ADK web interface, simply run:
@@ -54,7 +48,18 @@ This will automatically:
 If you want to run the ADK web interface manually without the setup script:
 
 ```bash
-adk web karpathy
+adk web
 ```
 
-**Important:** Always specify the `karpathy` directory when running `adk web`. If you run `adk web` without specifying a directory, it will scan all directories (including `sandbox`) and incorrectly show them as agents.
+## Enhanced ML Capabilities
+
+If you want substantially more powerful ML capabilities through a multi-agentic system, sign up for [www.k-dense.ai](https://www.k-dense.ai). Currently in closed beta, launching publicly in December 2025.
+
+## Upcoming Features
+
+- **Modal sandbox integration** - Choose any type of compute you want
+- **K-Dense Web features** - We might make some features from K-Dense Web available here based on interest
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=K-Dense-AI/karpathy&type=date&legend=top-left)](https://www.star-history.com/#K-Dense-AI/karpathy&type=date&legend=top-left)
