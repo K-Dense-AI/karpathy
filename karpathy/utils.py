@@ -116,6 +116,7 @@ def setup_uv_environment(
     try:
         # Create uv environment
         subprocess.run(
+            # ["uv", "venv", str(venv_path)],
             ["uv", "venv", str(venv_path)],
             check=True,
             capture_output=True,
@@ -127,7 +128,7 @@ def setup_uv_environment(
         print("\nInstalling machine learning packages...")
         
         # Use uv pip to install packages
-        install_cmd = ["uv", "pip", "install", "--python", str(venv_path / "bin" / "python")] + ml_packages
+        install_cmd = ["uv", "pip", "install", "--python", str(venv_path / "Scripts" / "python.exe")] + ml_packages
         
         print(f"  Installing: {', '.join(ml_packages)}")
         print("  (This may take a few minutes...)")
