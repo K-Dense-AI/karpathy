@@ -1,0 +1,217 @@
+manifest:
+  version: "0.1.3"
+  schema: https://a2as.org/cert/schema
+  subject:
+    name: k-dense-ai/karpathy
+    source: https://github.com/k-dense-ai/karpathy
+    branch: main
+    commit: "11ea0639"
+    scope: [karpathy/tools.py, karpathy/agent.py, karpathy/utils.py, karpathy/__init__.py]
+  issued:
+    by: A2AS.org
+    at: '2026-02-11T16:29:24Z'
+    url: https://a2as.org/certified/agents/k-dense-ai/karpathy
+  signatures:
+    digest: sha256:UpdQ_7NdNYYmLPGOecKblxY74J9GmMIwzSv0n3K4g_s
+    key: ed25519:4VaOZHa0sRjk9tixlPAZgYPn6gZpVA5SPLwkPwHOZaw
+    sig: ed25519:X9xCRHQZL--i4KEnehJ2SesX6Rr0aw2SUVdmEVvdTlRFODuPZLcTLAQTDcurLvBVn9kd4zNwpjs4OTMk1DGwCA
+
+agents:
+  main_agent:
+    type: instance
+    models: [AGENT_MODEL]
+    tools: [delegate_task]
+    params:
+      name: MainAgent
+      description: The main agent that makes sure the user's machine learning requests are successfully fulfilled
+      instruction:
+        function: load_instructions
+        type: file_load
+        file: main_agent
+      output_key: final_output
+
+models:
+  AGENT_MODEL:
+    type: function
+    agents: [main_agent]
+    params:
+      wrapper: LiteLlm
+      model: AGENT_MODEL
+
+tools:
+  delegate_task:
+    type: function
+    agents: [main_agent]
+    params:
+      description: |-
+        Delegate a task to an expert
+
+        Args:
+            prompt: The prompt describing the task to delegate
+            append_system_prompt: The system prompt describing the expert
+        Returns:
+            The result of the delegation with todos tracking and progress updates
+
+imports:
+  agent: agent
+  asdict: dataclasses.asdict
+  AssistantMessage: claude_agent_sdk.AssistantMessage
+  asyncio: asyncio
+  ClaudeAgentOptions: claude_agent_sdk.ClaudeAgentOptions
+  delegate_task: tools.delegate_task
+  LiteLlm: google.adk.models.lite_llm.LiteLlm
+  LlmAgent: google.adk.agents.LlmAgent
+  load_dotenv: dotenv.load_dotenv
+  load_instructions: utils.load_instructions
+  os: os
+  Path: pathlib.Path
+  query: claude_agent_sdk.query
+  ResultMessage: claude_agent_sdk.ResultMessage
+  shutil: shutil
+  subprocess: subprocess
+  tempfile: tempfile
+  ToolUseBlock: claude_agent_sdk.ToolUseBlock
+  yaml: yaml
+
+functions:
+  copy_env_file:
+    type: sync
+    module: karpathy.utils
+    params:
+      returns: None
+  delegate_task:
+    type: async
+    module: karpathy.tools
+    args: [prompt, append_system_prompt]
+  download_scientific_skills:
+    type: sync
+    module: karpathy.utils
+    args: [target_dir, github_repo, source_path, branch]
+    params:
+      returns: None
+  load_instructions:
+    type: sync
+    module: karpathy.utils
+    args: [agent_name]
+    params:
+      returns: str
+  setup_sandbox:
+    type: sync
+    module: karpathy.utils
+    params:
+      returns: None
+  setup_uv_environment:
+    type: sync
+    module: karpathy.utils
+    args: [sandbox_path, ml_packages]
+    params:
+      returns: None
+
+variables:
+  AGENT_MODEL:
+    type: env
+    params:
+      caller: [os.getenv]
+      path: [karpathy/.env]
+
+files:
+  .venv:
+    type: literal
+    actions: [read]
+    params:
+      caller: [setup_uv_environment]
+      path: [sandbox_path]
+  dest_dir:
+    type: variable
+    actions: [delete]
+    params:
+      caller: [shutil.rmtree]
+  instructions.yaml:
+    type: literal
+    actions: [read]
+    params:
+      caller: [load_instructions]
+      path: [current_dir]
+  instructions_path:
+    type: variable
+    actions: [read]
+    params:
+      caller: [open, yaml.safe_load]
+      alias: [f]
+  karpathy/.env:
+    type: literal
+    actions: [read]
+    params:
+      caller: [copy_env_file]
+  karpathy_env:
+    type: literal
+    actions: [read]
+    params:
+      caller: [Path('karpathy/.env')]
+  sandbox/.env:
+    type: literal
+    actions: [read]
+    params:
+      caller: [copy_env_file]
+  sandbox_path:
+    type: literal
+    actions: [read, write]
+    params:
+      caller: [Path(sandbox), sandbox_path.mkdir]
+  skill_dir:
+    type: variable
+    actions: [read]
+    params:
+      caller: [shutil.copytree]
+  source_dir:
+    type: variable
+    actions: [read]
+    params:
+      caller: [source_dir.iterdir]
+  target_dir:
+    type: variable
+    actions: [read]
+    params:
+      caller: [Path]
+  target_path:
+    type: literal
+    actions: [read, write]
+    params:
+      caller: [Path(target_dir), target_path.mkdir]
+  temp_dir:
+    type: variable
+    actions: [read]
+    params:
+      caller: [Path]
+  temp_path:
+    type: literal
+    actions: [read]
+    params:
+      caller: [Path(temp_dir)]
+
+processes:
+  git:
+    type: shell
+    actions: [exec]
+    args: [[clone, --depth, "1", --branch, branch, 'https://github.com/{...}.git', str(temp_path)]]
+    params:
+      caller: [subprocess.run]
+      shell: ["False"]
+  uv:
+    type: shell
+    actions: [exec]
+    args: [[venv, str(venv_path)]]
+    params:
+      caller: [subprocess.run]
+      shell: ["False"]
+
+networks:
+  github.com:
+    type: api
+    actions: [GET]
+    urls: ['/{...}']
+    protocols: [https]
+    ports: ["443"]
+    params:
+      pattern: https://github.com/{github_repo}.git
+      caller: [download_scientific_skills]
