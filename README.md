@@ -103,10 +103,6 @@ If you want substantially more powerful ML capabilities through a multi-agentic 
 - **Modal sandbox integration** - Choose any type of compute you want
 - **K-Dense Web features** - We might make some features from K-Dense Web available here based on interest
 
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=K-Dense-AI/karpathy&type=date&legend=top-left)](https://www.star-history.com/#K-Dense-AI/karpathy&type=date&legend=top-left)
-
 ## Disclaimer
 
 This project is **not** endorsed by or affiliated with Andrej Karpathy. The name is used as a tribute and out of deep respect for his contributions to AI and technical leadership.
