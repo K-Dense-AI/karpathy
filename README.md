@@ -13,6 +13,8 @@
 
 > **Stay up to date:** Follow K-Dense on [X](https://x.com/k_dense_ai), [LinkedIn](https://www.linkedin.com/company/k-dense-inc), and [YouTube](https://www.youtube.com/@K-Dense-Inc) for new skills, release announcements, walkthroughs, research workflow demos, and examples you can use with your own AI agent.
 
+> 🎬 **New to Scientific Agent Skills?** Watch [Getting Started with Scientific Agent Skills](https://youtu.be/ZxbnDaD_FVg) for a walkthrough of the skills library that powers this agent.
+
 > ⭐ **Help make AI for science easier to discover:** If [Scientific Agent Skills](https://github.com/K-Dense-AI/scientific-agent-skills) saves you time, teaches your agent a workflow, or helps your lab move faster, please [star that repository](https://github.com/K-Dense-AI/scientific-agent-skills). A star is a public signal that these open, reusable research skills are worth maintaining: it helps scientists, engineers, and open-source contributors find the project, shows which agent-skill standards are gaining real adoption, and gives us a clear reason to keep expanding the collection for the community.
 
 An agentic Machine Learning Engineer that trains state-of-the-art ML models using the Claude Agent SDK and Google ADK. This is a simple implementation demonstrating the power of Scientific Agent Skills for machine learning.
